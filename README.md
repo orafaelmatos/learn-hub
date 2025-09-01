@@ -167,5 +167,3 @@ Access the interactive API documentation:
 
 - **Swagger UI**: http://localhost:8000/swagger/
 - **ReDoc**: http://localhost:8000/redoc/
-
-``
