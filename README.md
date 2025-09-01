@@ -98,139 +98,74 @@ docker-compose exec web python manage.py createsuperuser
 
 ## 📚 API Endpoints
 
-### Autenticação
-- `POST /api/v1/auth/register/` - Registro de usuário
-- `POST /api/v1/auth/login/` - Login
-- `POST /api/v1/auth/logout/` - Logout
-- `POST /api/v1/auth/token/refresh/` - Renovar token
-- `POST /api/v1/auth/change-password/` - Alterar senha
+### Authentication
+  - `POST /api/v1/auth/register/` – Register user
+  - `POST /api/v1/auth/login/` – Login
+  - `POST /api/v1/auth/logout/` – Logout
+  - `POST /api/v1/auth/token/refresh/` – Refresh token
+  - `POST /api/v1/auth/change-password/` – Change password
 
-### Usuários
-- `GET /api/v1/profile/` - Perfil do usuário
+### Users
+- `GET /api/v1/profile/` - User profile
 - `PUT /api/v1/profile/update/` - Atualizar perfil
 - `GET /api/v1/teachers/` - Listar professores
 
-### Cursos
-- `GET /api/v1/courses/` - Listar cursos
-- `POST /api/v1/courses/` - Criar curso (professor)
-- `GET /api/v1/courses/{id}/` - Detalhes do curso
-- `PUT /api/v1/courses/{id}/` - Atualizar curso (professor)
-- `POST /api/v1/courses/{id}/enroll/` - Matricular em curso
-- `POST /api/v1/courses/{id}/rate/` - Avaliar curso
+### Courses
+- `GET /api/v1/courses/` - List courses
+- `POST /api/v1/courses/` - Create course (teacher)
+- `GET /api/v1/courses/{id}/` - Course details
+- `PUT /api/v1/courses/{id}/` - Update course (teacher)
+- `POST /api/v1/courses/{id}/enroll/` - Enroll in course
+- `POST /api/v1/courses/{id}/rate/` - Rate course
 
-### Materiais
-- `GET /api/v1/materials/` - Listar materiais
-- `POST /api/v1/materials/` - Upload de material (professor)
-- `GET /api/v1/materials/{id}/download/` - Download de material
-- `POST /api/v1/materials/{id}/view/` - Registrar visualização
+### Materials
+- `GET /api/v1/materials/` - List materials
+- `POST /api/v1/materials/` - Upload material (teacher)
+- `GET /api/v1/materials/{id}/download/` - Download material
+- `POST /api/v1/materials/{id}/view/` - Register view
 
-### Aulas ao Vivo
-- `GET /api/v1/live-classes/` - Listar aulas ao vivo
-- `POST /api/v1/live-classes/` - Criar aula (professor)
-- `POST /api/v1/live-classes/{id}/start/` - Iniciar aula (professor)
-- `POST /api/v1/live-classes/{id}/join/` - Juntar-se à aula
-- `GET /api/v1/live-classes/{id}/messages/` - Chat da aula
+### Live Classes
+- `GET /api/v1/live-classes/` - List live classes
+- `POST /api/v1/live-classes/` - Create live class (teacher)
+- `POST /api/v1/live-classes/{id}/start/` - Start class (teacher)
+- `POST /api/v1/live-classes/{id}/join/` - Join class
+- `GET /api/v1/live-classes/{id}/messages/` - Class chat
 
-## 🔐 Autenticação
+### API Documentation
+When running in Docker, access the docs at:
+  - Swagger UI: http://localhost:8000/swagger/
+  - ReDoc: http://localhost:8000/redoc/
 
-O projeto usa JWT (JSON Web Tokens) para autenticação:
 
-```bash
-# Login
-curl -X POST http://localhost:8000/api/v1/auth/login/ \
-  -H "Content-Type: application/json" \
-  -d '{"email": "user@example.com", "password": "password"}'
+## 📊 Data Models
 
-# Usar token
-curl -X GET http://localhost:8000/api/v1/profile/ \
-  -H "Authorization: Bearer <your-access-token>"
-```
+### Users
+- **User**: Custom user with types (teacher, student, admin)
+- **Profile**: Personal information and preferences
 
-## 📊 Modelos de Dados
+### Courses
+- **Category**: Course categories
+- **Course**: Course information
+- **CourseEnrollment**: Student enrollments
+- **CourseRating**: Ratings and reviews
 
-### Usuários
-- **User**: Usuário customizado com tipos (professor, aluno, admin)
-- **Perfil**: Informações pessoais e preferências
+### Materials
+- **Material**: Study files
+- **MaterialFolder**: Folder organization
+- **MaterialAccess**: Access control and statistics
 
-### Cursos
-- **Category**: Categorias de cursos
-- **Course**: Informações do curso
-- **CourseEnrollment**: Matrículas de alunos
-- **CourseRating**: Avaliações e reviews
+### Live Classes
+- **LiveClass**: Scheduling and configuration
+- **LiveClassParticipant**: Participants and attendance
+- **LiveClassMessage**: Live class chat
+- **LiveClassRecording**: Class recordings
 
-### Materiais
-- **Material**: Arquivos de estudo
-- **MaterialFolder**: Organização em pastas
-- **MaterialAccess**: Controle de acesso e estatísticas
 
-### Aulas ao Vivo
-- **LiveClass**: Agendamento e configuração
-- **LiveClassParticipant**: Participantes e presença
-- **LiveClassMessage**: Chat durante a aula
-- **LiveClassRecording**: Gravações das aulas
+## 📝 API documentation
 
-## 🧪 Testes
-
-```bash
-# Executar todos os testes
-python manage.py test
-
-# Executar testes de um app específico
-python manage.py test users
-python manage.py test courses
-python manage.py test materials
-python manage.py test live_classes
-```
-
-## 📝 Documentação da API
-
-Acesse a documentação interativa da API:
+Access the interactive API documentation:
 
 - **Swagger UI**: http://localhost:8000/swagger/
 - **ReDoc**: http://localhost:8000/redoc/
 
-## 🚀 Deploy
-
-### Produção
-
-1. Configure as variáveis de ambiente para produção
-2. Use um servidor WSGI como Gunicorn
-3. Configure um proxy reverso (Nginx)
-4. Use um banco PostgreSQL em produção
-5. Configure Redis para cache e Celery
-
-### Docker (opcional)
-
-```bash
-# Construir imagem
-docker build -t education-platform .
-
-# Executar container
-docker run -p 8000:8000 education-platform
-```
-
-## 🤝 Contribuição
-
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
-
-## 📞 Suporte
-
-Para suporte, envie um email para support@educationplatform.com ou abra uma issue no GitHub.
-
-## 🔄 Changelog
-
-### v1.0.0
-- Implementação inicial do backend
-- Sistema de autenticação JWT
-- Gestão completa de cursos e materiais
-- Sistema de aulas ao vivo
-- API RESTful documentada
-- Princípios SOLID aplicados 
+``
