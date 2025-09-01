@@ -1,0 +1,9 @@
+venv/
+.env
+.vscode/
+__pycache__/
+.pytest_cache/ 
+.coveragerc
+.coverage
+media/
+htmlcov/
